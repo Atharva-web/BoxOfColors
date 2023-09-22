@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited colors!</title>
+</head>
+<body>
+
+    <h1>Box of Colors!!</h1>
+    <div id="boxOfColors" style="height: 300px; width: 300px; border: 2px solid black; margin: 30px 0px;"></div>
+    <div id="hexVal" style="height: 20px; width: 100px; border: 2px solid black; margin: 30px 0px; padding: 5px;"></div>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+    <script>
+
+        // generating non-repeating colors
+        // create element which stores previous color
+
+        // generate random colors
+        const randomColor = () => {
+            const hex = "0123456789ABEDEF";
+            let color = "#";
+            for(let i = 0; i < 6; i++) {
+                let index = Math.floor(Math.random() * 16);
+                color += hex[index];
+            }
+
+            return color;
+        };
+
+
+        // click events
+        const startButton = document.querySelector("#start");
+        const stopButton = document.querySelector("#stop");
+
+        let intervalId = undefined;
+        const box = document.querySelector("#boxOfColors");
+
+        startButton.addEventListener("click", () => {
+            intervalId = setInterval(() => {
+                const box = document.querySelector("#boxOfColors");
+                box.style.backgroundColor = randomColor();
+                const hexVal = document.querySelector("#hexVal");
+                hexVal.innerHTML = randomColor();
+            }, 100);
+        });
+
+        stopButton.addEventListener("click", () => {
+            clearInterval(intervalId);
+            intervalId = null;
+        });
+
+        // reset
+        const resetButton = document.querySelector("#reset");
+        resetButton.addEventListener("click", () => {
+            box.style.backgroundColor = "white";
+            hexVal.innerHTML = "";
+            clearInterval(intervalId);
+            intervalId = null;
+        });
+
+        /*
+            production code
+            if(!interval) {
+                intervalId = setInterval(changeColor,1000);
+            }
+
+            but why?
+        */
+
+    </script>
+</body>
+</html>
